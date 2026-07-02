@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { computeStats, monthRange } from "@/lib/stats";
+import { byDateThenTime } from "@/lib/sort";
 
 export async function GET(
   request: NextRequest,
@@ -22,8 +23,8 @@ export async function GET(
       closerId: id,
       ...(range ? { appointmentDate: { gte: range.gte, lt: range.lt } } : {}),
     },
-    orderBy: { appointmentDate: "desc" },
   });
+  appointments.sort(byDateThenTime);
 
   const stats = computeStats(appointments);
   const setterStats = setter
