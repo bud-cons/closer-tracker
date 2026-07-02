@@ -7,7 +7,7 @@ import { calculateCommission } from "@/lib/commission";
 import type { Appointment } from "@/lib/types";
 
 const inputClass =
-  "w-full rounded-lg border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-500";
+  "w-full rounded-lg border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-white outline-none [color-scheme:dark] focus:border-slate-500";
 
 export type AppointmentFormValues = {
   name: string;
@@ -97,9 +97,9 @@ export default function AppointmentForm({
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
       <form
         onSubmit={handleSubmit}
-        className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-xl bg-white p-6 shadow-lg"
+        className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-xl border border-slate-800 bg-slate-900 p-6 shadow-lg"
       >
-        <h2 className="mb-4 text-lg font-semibold text-slate-900">
+        <h2 className="mb-4 text-lg font-semibold text-white">
           {appointment ? "Edit Appointment" : "Add Appointment"}
         </h2>
 
@@ -200,20 +200,20 @@ export default function AppointmentForm({
           </div>
         </div>
 
-        {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
+        {error && <p className="mt-3 text-sm text-red-400">{error}</p>}
 
         <div className="mt-6 flex justify-end gap-2">
           <button
             type="button"
             onClick={onCancel}
-            className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+            className="rounded-lg border border-slate-700 px-4 py-2 text-sm font-medium text-slate-300 hover:bg-slate-800"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={saving}
-            className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700 disabled:opacity-50"
+            className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500 disabled:opacity-50"
           >
             {saving ? "Saving..." : "Save"}
           </button>
@@ -226,7 +226,7 @@ export default function AppointmentForm({
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-xs font-medium text-slate-500">{label}</span>
+      <span className="mb-1 block text-xs font-medium text-slate-400">{label}</span>
       {children}
     </label>
   );

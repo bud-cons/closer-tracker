@@ -48,18 +48,18 @@ export default function DashboardPage() {
     : setterSummary;
 
   return (
-    <div className="min-h-screen bg-slate-50 pb-16">
-      <header className="border-b border-slate-200 bg-white">
+    <div className="min-h-screen bg-slate-950 pb-16">
+      <header className="border-b border-slate-800 bg-slate-900">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-5">
           <div>
-            <h1 className="text-xl font-semibold text-slate-900">Closer Tracker</h1>
-            <p className="text-sm text-slate-500">Team dashboard</p>
+            <h1 className="text-xl font-semibold text-white">Closer Tracker</h1>
+            <p className="text-sm text-slate-400">Team dashboard</p>
           </div>
           <div className="flex items-center gap-3">
             <MonthSelector value={month} onChange={setMonth} />
             <button
               onClick={handleLogout}
-              className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-50"
+              className="rounded-lg border border-slate-700 px-3 py-1.5 text-sm text-slate-300 hover:bg-slate-800"
             >
               Log out
             </button>
@@ -69,20 +69,20 @@ export default function DashboardPage() {
 
       <main className="mx-auto max-w-6xl px-6 py-8">
         <section>
-          <h2 className="mb-4 text-sm font-semibold uppercase tracking-wide text-slate-500">
+          <h2 className="mb-4 text-sm font-semibold uppercase tracking-wide text-slate-400">
             Closers
           </h2>
           {loading ? (
-            <p className="text-sm text-slate-400">Loading...</p>
+            <p className="text-sm text-slate-500">Loading...</p>
           ) : (
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {closers.map((c) => (
                 <Link
                   key={c.id}
                   href={`/closer/${c.id}?month=${month}`}
-                  className="block rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-slate-400 hover:shadow-md"
+                  className="block rounded-xl border border-slate-800 bg-slate-900 p-5 shadow-sm transition hover:border-slate-600 hover:shadow-md"
                 >
-                  <h3 className="mb-3 text-base font-semibold text-slate-900">{c.name}</h3>
+                  <h3 className="mb-3 text-base font-semibold text-white">{c.name}</h3>
                   <dl className="space-y-1 text-sm">
                     <Row label="Calls" value={String(c.stats.totalCalls)} />
                     <Row label="Shows" value={`${c.stats.shows} (${formatPercent(c.stats.showRate)})`} />
@@ -105,13 +105,13 @@ export default function DashboardPage() {
 
         <section className="mt-10">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-            <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-400">
               By Setter / Origin
             </h2>
             <select
               value={setterFilter}
               onChange={(e) => setSetterFilter(e.target.value)}
-              className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm outline-none focus:border-slate-500"
+              className="rounded-lg border border-slate-700 bg-slate-900 px-3 py-1.5 text-sm text-white outline-none focus:border-slate-500"
             >
               <option value="">All Setters / Origins</option>
               {PEOPLE.map((p) => (
@@ -122,9 +122,9 @@ export default function DashboardPage() {
             </select>
           </div>
 
-          <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
+          <div className="overflow-x-auto rounded-xl border border-slate-800 bg-slate-900 shadow-sm">
             <table className="w-full min-w-[720px] text-left text-sm">
-              <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+              <thead className="bg-slate-800/50 text-xs uppercase tracking-wide text-slate-400">
                 <tr>
                   <th className="px-4 py-3">Setter / Origin</th>
                   <th className="px-4 py-3">Calls</th>
@@ -138,8 +138,8 @@ export default function DashboardPage() {
               </thead>
               <tbody>
                 {visibleSetterSummary.map((s) => (
-                  <tr key={s.setter} className="border-t border-slate-100">
-                    <td className="px-4 py-3 font-medium text-slate-900">{s.setter}</td>
+                  <tr key={s.setter} className="border-t border-slate-800">
+                    <td className="px-4 py-3 font-medium text-white">{s.setter}</td>
                     <td className="px-4 py-3">{s.stats.totalCalls}</td>
                     <td className="px-4 py-3">{s.stats.shows}</td>
                     <td className="px-4 py-3">{s.stats.dealsWon}</td>
@@ -161,8 +161,8 @@ export default function DashboardPage() {
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-center justify-between">
-      <dt className="text-slate-500">{label}</dt>
-      <dd className="font-medium text-slate-900">{value}</dd>
+      <dt className="text-slate-400">{label}</dt>
+      <dd className="font-medium text-white">{value}</dd>
     </div>
   );
 }

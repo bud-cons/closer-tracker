@@ -84,18 +84,18 @@ function CloserPageInner() {
   }
 
   if (loading && !closer) {
-    return <div className="p-8 text-sm text-slate-400">Loading...</div>;
+    return <div className="min-h-screen bg-slate-950 p-8 text-sm text-slate-500">Loading...</div>;
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 pb-16">
-      <header className="border-b border-slate-200 bg-white">
+    <div className="min-h-screen bg-slate-950 pb-16">
+      <header className="border-b border-slate-800 bg-slate-900">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-5">
           <div>
-            <Link href="/" className="text-sm text-slate-500 hover:underline">
+            <Link href="/" className="text-sm text-slate-400 hover:underline">
               ← Dashboard
             </Link>
-            <h1 className="text-xl font-semibold text-slate-900">{closer?.name}</h1>
+            <h1 className="text-xl font-semibold text-white">{closer?.name}</h1>
           </div>
           <MonthSelector value={month} onChange={setMonth} />
         </div>
@@ -137,7 +137,7 @@ function CloserPageInner() {
                 <select
                   value={setterFilter}
                   onChange={(e) => setSetterFilter(e.target.value)}
-                  className="rounded-lg border border-slate-300 px-2 py-1 text-xs outline-none focus:border-slate-500"
+                  className="rounded-lg border border-slate-700 bg-slate-900 px-2 py-1 text-xs text-white outline-none focus:border-slate-500"
                 >
                   <option value="">All</option>
                   {PEOPLE.map((p) => (
@@ -160,7 +160,7 @@ function CloserPageInner() {
         )}
 
         <div className="mt-8 mb-4 flex items-center justify-between">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-400">
             Appointments
           </h2>
           <button
@@ -168,15 +168,15 @@ function CloserPageInner() {
               setEditing(undefined);
               setFormOpen(true);
             }}
-            className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700"
+            className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-500"
           >
             + Add Appointment
           </button>
         </div>
 
-        <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
+        <div className="overflow-x-auto rounded-xl border border-slate-800 bg-slate-900 shadow-sm">
           <table className="w-full min-w-[950px] text-left text-sm">
-            <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+            <thead className="bg-slate-800/50 text-xs uppercase tracking-wide text-slate-400">
               <tr>
                 <th className="px-3 py-3">Name</th>
                 <th className="px-3 py-3">Booked</th>
@@ -195,24 +195,24 @@ function CloserPageInner() {
             <tbody>
               {appointments.length === 0 && (
                 <tr>
-                  <td colSpan={12} className="px-3 py-6 text-center text-slate-400">
+                  <td colSpan={12} className="px-3 py-6 text-center text-slate-500">
                     No appointments for this period yet.
                   </td>
                 </tr>
               )}
               {appointments.map((a) => (
-                <tr key={a.id} className="border-t border-slate-100">
-                  <td className="px-3 py-3 font-medium text-slate-900">{a.name}</td>
-                  <td className="px-3 py-3 text-slate-500">{formatDate(a.dateBooked)}</td>
-                  <td className="px-3 py-3 text-slate-500">{formatDate(a.appointmentDate)}</td>
-                  <td className="px-3 py-3 text-slate-500">{a.requestedTime}</td>
-                  <td className="px-3 py-3 text-slate-500">{a.setterOrigin}</td>
-                  <td className="px-3 py-3 text-slate-500">{a.showed}</td>
-                  <td className="px-3 py-3 text-slate-500">{a.result}</td>
-                  <td className="px-3 py-3 text-slate-500">{formatDate(a.rescheduleDate)}</td>
-                  <td className="px-3 py-3 text-slate-500">{formatCurrency(a.cashCollected)}</td>
-                  <td className="px-3 py-3 text-slate-500">{formatCurrency(a.commission)}</td>
-                  <td className="px-3 py-3 text-slate-500">{a.objection}</td>
+                <tr key={a.id} className="border-t border-slate-800">
+                  <td className="px-3 py-3 font-medium text-white">{a.name}</td>
+                  <td className="px-3 py-3 text-slate-400">{formatDate(a.dateBooked)}</td>
+                  <td className="px-3 py-3 text-slate-400">{formatDate(a.appointmentDate)}</td>
+                  <td className="px-3 py-3 text-slate-400">{a.requestedTime}</td>
+                  <td className="px-3 py-3 text-slate-400">{a.setterOrigin}</td>
+                  <td className="px-3 py-3 text-slate-400">{a.showed}</td>
+                  <td className="px-3 py-3 text-slate-400">{a.result}</td>
+                  <td className="px-3 py-3 text-slate-400">{formatDate(a.rescheduleDate)}</td>
+                  <td className="px-3 py-3 text-slate-400">{formatCurrency(a.cashCollected)}</td>
+                  <td className="px-3 py-3 text-slate-400">{formatCurrency(a.commission)}</td>
+                  <td className="px-3 py-3 text-slate-400">{a.objection}</td>
                   <td className="px-3 py-3">
                     <div className="flex gap-2">
                       <button
@@ -220,7 +220,7 @@ function CloserPageInner() {
                           setEditing(a);
                           setFormOpen(true);
                         }}
-                        className="text-slate-500 hover:text-slate-900"
+                        className="text-slate-400 hover:text-white"
                       >
                         Edit
                       </button>
