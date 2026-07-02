@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Closer {
+  id           String        @id @default(cuid())
+  name         String        @unique
+  order        Int           @default(0)
+  appointments Appointment[]
+}
+
+model Appointment {
+  id              String    @id @default(cuid())
+  closer          Closer    @relation(fields: [closerId], references: [id], onDelete: Cascade)
+  closerId        String
+  name            String
+  dateBooked      DateTime?
+  appointmentDate DateTime
+  requestedTime   String?
+  setterOrigin    String
+  showed          String
+  result          String?
+  rescheduleDate  DateTime?
+  cashCollected   Float     @default(0)
+  commission      Float     @default(0)
+  objection       String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  @@index([closerId])
+  @@index([appointmentDate])
+  @@index([setterOrigin])
+}
