@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { PEOPLE, SHOWED_OPTIONS, RESULT_OPTIONS } from "@/lib/constants";
 import { toInputDate } from "@/lib/format";
+import { calculateCommission } from "@/lib/commission";
 import type { Appointment } from "@/lib/types";
 
 const inputClass =
@@ -50,9 +51,26 @@ export default function AppointmentForm({
   const [values, setValues] = useState<AppointmentFormValues>(toFormValues(appointment));
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  // Only auto-fill Commission for brand-new appointments, and stop the
+  // moment the user edits Commission by hand so we never clobber an
+  // intentional override.
+  const [commissionAuto, setCommissionAuto] = useState(!appointment);
 
   function set<K extends keyof AppointmentFormValues>(key: K, value: AppointmentFormValues[K]) {
     setValues((v) => ({ ...v, [key]: value }));
+  }
+
+  function setCashCollected(value: string) {
+    setValues((v) => ({
+      ...v,
+      cashCollected: value,
+      commission: commissionAuto ? String(calculateCommission(Number(value) || 0)) : v.commission,
+    }));
+  }
+
+  function setCommission(value: string) {
+    setCommissionAuto(false);
+    set("commission", value);
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -158,16 +176,16 @@ export default function AppointmentForm({
               type="number"
               step="0.01"
               value={values.cashCollected}
-              onChange={(e) => set("cashCollected", e.target.value)}
+              onChange={(e) => setCashCollected(e.target.value)}
               className={inputClass}
             />
           </Field>
-          <Field label="Commission">
+          <Field label={commissionAuto ? "Commission (auto — edit to override)" : "Commission"}>
             <input
               type="number"
               step="0.01"
               value={values.commission}
-              onChange={(e) => set("commission", e.target.value)}
+              onChange={(e) => setCommission(e.target.value)}
               className={inputClass}
             />
           </Field>
