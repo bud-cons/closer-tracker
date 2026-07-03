@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback, Suspense } from "react";
+import { useEffect, useState, useCallback, useMemo, Suspense } from "react";
 import Link from "next/link";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import MonthSelector from "@/components/MonthSelector";
@@ -8,7 +8,11 @@ import StatsBox from "@/components/StatsBox";
 import AppointmentForm, { AppointmentFormValues } from "@/components/AppointmentForm";
 import { PEOPLE } from "@/lib/constants";
 import { formatCurrency, formatPercent, formatDate, currentMonthValue } from "@/lib/format";
+import { byDateThenTime } from "@/lib/sort";
 import type { Appointment, Closer, Stats } from "@/lib/types";
+
+type SortKey = "date" | "commission";
+type SortDir = "asc" | "desc";
 
 function CloserPageInner() {
   const params = useParams<{ id: string }>();
@@ -25,6 +29,26 @@ function CloserPageInner() {
   const [loading, setLoading] = useState(true);
   const [formOpen, setFormOpen] = useState(false);
   const [editing, setEditing] = useState<Appointment | undefined>(undefined);
+  const [sortKey, setSortKey] = useState<SortKey>("date");
+  const [sortDir, setSortDir] = useState<SortDir>("asc");
+
+  function toggleSort(key: SortKey) {
+    if (sortKey === key) {
+      setSortDir((d) => (d === "asc" ? "desc" : "asc"));
+    } else {
+      setSortKey(key);
+      setSortDir("asc");
+    }
+  }
+
+  const sortedAppointments = useMemo(() => {
+    const arr = [...appointments];
+    arr.sort((a, b) => {
+      const cmp = sortKey === "date" ? byDateThenTime(a, b) : a.commission - b.commission;
+      return sortDir === "asc" ? cmp : -cmp;
+    });
+    return arr;
+  }, [appointments, sortKey, sortDir]);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -180,27 +204,27 @@ function CloserPageInner() {
               <tr>
                 <th className="px-3 py-3">Name</th>
                 <th className="px-3 py-3">Booked</th>
-                <th className="px-3 py-3">Appt Date</th>
+                <SortableHeader label="Appt Date" sortKey="date" activeKey={sortKey} dir={sortDir} onClick={toggleSort} />
                 <th className="px-3 py-3">Time</th>
                 <th className="px-3 py-3">Setter / Origin</th>
                 <th className="px-3 py-3">Showed</th>
                 <th className="px-3 py-3">Result</th>
                 <th className="px-3 py-3">Reschedule</th>
                 <th className="px-3 py-3">CC</th>
-                <th className="px-3 py-3">Commission</th>
+                <SortableHeader label="Commission" sortKey="commission" activeKey={sortKey} dir={sortDir} onClick={toggleSort} />
                 <th className="px-3 py-3">Objection</th>
                 <th className="px-3 py-3"></th>
               </tr>
             </thead>
             <tbody>
-              {appointments.length === 0 && (
+              {sortedAppointments.length === 0 && (
                 <tr>
                   <td colSpan={12} className="px-3 py-6 text-center text-slate-500">
                     No appointments for this period yet.
                   </td>
                 </tr>
               )}
-              {appointments.map((a) => (
+              {sortedAppointments.map((a) => (
                 <tr key={a.id} className="border-t border-slate-800">
                   <td className="px-3 py-3 font-medium text-white">{a.name}</td>
                   <td className="px-3 py-3 text-slate-400">{formatDate(a.dateBooked)}</td>
@@ -258,5 +282,33 @@ export default function CloserPage() {
     <Suspense>
       <CloserPageInner />
     </Suspense>
+  );
+}
+
+function SortableHeader({
+  label,
+  sortKey,
+  activeKey,
+  dir,
+  onClick,
+}: {
+  label: string;
+  sortKey: SortKey;
+  activeKey: SortKey;
+  dir: SortDir;
+  onClick: (key: SortKey) => void;
+}) {
+  const active = sortKey === activeKey;
+  return (
+    <th className="px-3 py-3">
+      <button
+        type="button"
+        onClick={() => onClick(sortKey)}
+        className={`flex items-center gap-1 hover:text-white ${active ? "text-white" : ""}`}
+      >
+        {label}
+        <span className="text-[10px]">{active ? (dir === "asc" ? "▲" : "▼") : "⇅"}</span>
+      </button>
+    </th>
   );
 }

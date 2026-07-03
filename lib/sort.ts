@@ -22,11 +22,11 @@ export function parseTimeToMinutes(value: string | null | undefined): number {
   return hours * 60 + minutes;
 }
 
-export function byDateThenTime<T extends { appointmentDate: Date; requestedTime: string | null }>(
+export function byDateThenTime<T extends { appointmentDate: Date | string; requestedTime: string | null }>(
   a: T,
   b: T
 ): number {
-  const dateDiff = a.appointmentDate.getTime() - b.appointmentDate.getTime();
+  const dateDiff = new Date(a.appointmentDate).getTime() - new Date(b.appointmentDate).getTime();
   if (dateDiff !== 0) return dateDiff;
   return parseTimeToMinutes(a.requestedTime) - parseTimeToMinutes(b.requestedTime);
 }
