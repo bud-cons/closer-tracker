@@ -16,8 +16,8 @@ closer's numbers at a glance plus a Setter/Origin rollup across the whole team.
 - **Editable roster** — closer names and the Setter/Origin dropdown options
   both come from [`lib/constants.ts`](./lib/constants.ts). Edit that file and
   re-run the seed script to add or remove people.
-- **Commission bonus tiers** — every $10k of Cash Collected in a month bumps
-  the bonus rate by +10% (10k = 10%, 20k = 20%, 30k = 30%, ...). Cash
+- **Commission bonus tiers** — every $100k of Cash Collected in a month bumps
+  the bonus rate by +10% (100k = 10%, 200k = 20%, 300k = 30%, ...). Cash
   Collected decides which tier a closer is in for the whole month (cliff, not
   marginal); that rate is then applied to their monthly **Commission**, and
   the resulting dollar amount is added on top of Commission. Edit the tier
