@@ -22,41 +22,6 @@ closer's numbers at a glance plus a Setter/Origin rollup across the whole team.
   marginal); that rate is then applied to their monthly **Commission**, and
   the resulting dollar amount is added on top of Commission. Edit the tier
   size/step in [`lib/bonus.ts`](./lib/bonus.ts) if the plan changes.
-- **Tracker (`/tracker`)** — a personal calorie/macro/workout tracker with a
-  75-Hard-style pass/fail streak. See below.
-
-### Tracker
-
-Behind the same password gate as the sales dashboard, `/tracker` is a
-calorie, macro, and workout tracker:
-
-- **Today** — progress bars for calories/protein/carbs/fat against your
-  targets, a live pass/fail checklist, and quick-add forms for food and
-  workouts.
-- **Screenshot import** — upload a photo of a nutrition label, a food-tracking
-  app entry, or a wearable's workout summary, and Claude reads the numbers
-  into the form for you to review and confirm before saving (nothing is
-  saved without your confirmation). Requires `ANTHROPIC_API_KEY` — without it
-  the upload button still works but shows an error explaining it's not
-  configured.
-- **Workout calorie estimates** — for BJJ, weights, walking, running, or
-  anything else, pick an intensity and duration and it estimates calories
-  burned using the standard MET formula (`calories = MET × bodyweight(kg) ×
-  hours`) and your bodyweight from Settings. Exercise calories are shown
-  separately and are **not** added back to your food budget — no
-  compensating by "earning back" calories from a workout.
-- **Streak** — a day passes only if calories stayed at or under target,
-  protein met its target, carbs and fat stayed at or under target, *and* a
-  workout was logged. Miss any one and the day (and the streak) breaks, same
-  spirit as 75 Hard. History (`/tracker/history`) shows a day-by-day grid and
-  table going back 90 days.
-- **Settings** (`/tracker/settings`) — set your bodyweight and daily macro
-  targets. There's no calculator; enter the numbers you want to hit.
-
-To enable AI screenshot parsing, add an `ANTHROPIC_API_KEY` environment
-variable (get one at [console.anthropic.com](https://console.anthropic.com)).
-Optionally set `ANTHROPIC_TRACKER_MODEL` to override the model used (defaults
-to `claude-sonnet-5`).
 
 ## Local development
 
