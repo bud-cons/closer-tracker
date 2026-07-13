@@ -77,3 +77,16 @@ model WorkoutEntry {
 
   @@index([date])
 }
+
+model LiftEntry {
+  id        String   @id @default(cuid())
+  date      String // "YYYY-MM-DD"
+  exercise  String // e.g. "Squat", "Bench Press", "Deadlift"
+  weightLbs Float
+  reps      Int
+  notes     String?
+  createdAt DateTime @default(now())
+
+  @@index([date])
+  @@index([exercise])
+}
