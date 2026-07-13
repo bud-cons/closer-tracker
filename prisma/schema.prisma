@@ -36,3 +36,57 @@ model Appointment {
   @@index([appointmentDate])
   @@index([setterOrigin])
 }
+
+// --- Calorie / macro / workout tracker ---
+// Single-user app: TrackerProfile is a singleton row (id "default").
+
+model TrackerProfile {
+  id            String   @id @default(cuid())
+  bodyWeightLbs Float    @default(180)
+  calorieTarget Int      @default(2200)
+  proteinTarget Int      @default(180)
+  carbsTarget   Int      @default(200)
+  fatTarget     Int      @default(70)
+  updatedAt     DateTime @updatedAt
+}
+
+model FoodEntry {
+  id          String   @id @default(cuid())
+  date        String // "YYYY-MM-DD", the day this entry counts toward
+  description String
+  calories    Int
+  protein     Float    @default(0)
+  carbs       Float    @default(0)
+  fat         Float    @default(0)
+  source      String   @default("manual") // "manual" | "ai"
+  createdAt   DateTime @default(now())
+
+  @@index([date])
+}
+
+model WorkoutEntry {
+  id              String   @id @default(cuid())
+  date            String // "YYYY-MM-DD", the day this entry counts toward
+  activity        String // "BJJ" | "Weights" | "Walk" | "Run" | "Other"
+  intensity       String? // "light" | "moderate" | "vigorous" (used for MET calc)
+  durationMinutes Int
+  caloriesBurned  Int
+  source          String   @default("manual") // "manual" | "met" | "ai"
+  notes           String?
+  createdAt       DateTime @default(now())
+
+  @@index([date])
+}
+
+model LiftEntry {
+  id        String   @id @default(cuid())
+  date      String // "YYYY-MM-DD"
+  exercise  String // e.g. "Squat", "Bench Press", "Deadlift"
+  weightLbs Float
+  reps      Int
+  notes     String?
+  createdAt DateTime @default(now())
+
+  @@index([date])
+  @@index([exercise])
+}

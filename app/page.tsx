@@ -56,6 +56,12 @@ export default function DashboardPage() {
             <p className="text-sm text-slate-400">Team dashboard</p>
           </div>
           <div className="flex items-center gap-3">
+            <Link
+              href="/tracker"
+              className="rounded-lg border border-slate-700 px-3 py-1.5 text-sm text-slate-300 hover:bg-slate-800"
+            >
+              Tracker
+            </Link>
             <MonthSelector value={month} onChange={setMonth} />
             <button
               onClick={handleLogout}
