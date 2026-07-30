@@ -19,8 +19,8 @@ closer's numbers at a glance plus a Setter/Origin rollup across the whole team.
 - **Commission bonus tiers** — every $100k of Cash Collected in a month bumps
   the bonus rate by +1% (100k = 1%, 200k = 2%, 300k = 3%, ...). Cash
   Collected decides which tier a closer is in for the whole month (cliff, not
-  marginal); that rate is then applied to their monthly **Commission**, and
-  the resulting dollar amount is added on top of Commission. Edit the tier
+  marginal), and that rate is applied to that same **Cash Collected** total.
+  The resulting dollar amount is added on top of Commission. Edit the tier
   size/step in [`lib/bonus.ts`](./lib/bonus.ts) if the plan changes.
 
 ## Local development

@@ -1,4 +1,4 @@
-import { bonusAmountForCommission, bonusPercentForCashCollected } from "./bonus";
+import { bonusAmountForCashCollected, bonusPercentForCashCollected } from "./bonus";
 
 export type StatInput = {
   showed: string;
@@ -42,7 +42,7 @@ export function computeStats(appointments: StatInput[]): Stats {
   const cc = appointments.reduce((sum, a) => sum + a.cashCollected, 0);
   const commission = appointments.reduce((sum, a) => sum + a.commission, 0);
   const bonusPercent = bonusPercentForCashCollected(cc);
-  const bonusAmount = bonusAmountForCommission(commission, bonusPercent);
+  const bonusAmount = bonusAmountForCashCollected(cc, bonusPercent);
 
   return {
     totalCalls,
